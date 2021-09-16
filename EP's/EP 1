@@ -1,1 +1,47 @@
-teste
+"""
+CONVERSÃO DECIMAL PARA BINÁRIO
+
+Input: número tipo float 
+Output: as componentes binárias
+
+"""
+
+
+
+
+
+
+
+
+N=float(input("Digite um número: ")) #Número a ser convertido para a base 2
+
+base=2 
+coef=['.'] #lista com os dígitos 
+dec=[]
+
+intt=int(N//1) #parte inteira do numero N
+f=float(N-N//1) #parte decimal do numero N
+
+
+#Conversao da parte inteira para base 2
+while intt>=base :
+    i=intt%base
+    coef.append(str(i))
+    intt=intt//base
+coef.append(str(intt))
+
+#Conversao da parte decimal para base 2 com no máximo 15 casas
+j=0
+while f>0 and j<15:
+    dec.append(str(int((base*f)//1)))
+    f=((2*f)%1)
+    j=j+1
+
+
+coef.reverse() #inverte a lista
+
+inteiro=str(''.join(coef)) # transforma a lista coef em uma string
+decimal=str(''.join(dec)) # transforma a lista dec em uma string
+
+print(inteiro+decimal)
+
