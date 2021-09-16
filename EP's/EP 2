@@ -1,0 +1,96 @@
+"""
+NÍVEL DE ENERGIA DO POÇO QUADRADO
+
+Técnicas numéricas para encontrar zeros de funções podem ser aplicadas em vários sistemas físicos. 
+Neste EP, vamos ilustrar uma dessas aplicações em um problema elementar de Mecânica Quântica, o poço quadrado finito. 
+
+O objetivo deste EP será obter numericamente os primeiros níveis de energia En de um poço quadrado.
+O problema do poço quadrado envolve uma partícula de massa m e enegia E confinada em um poço de potencial quadrado
+de altura V e largura w. Estamos interessados no caso de estados ligados, de modo que E < V.
+A energia da partícula é quantizada, ou seja, pode assumir apenasdeterminados valores E=En  onde n é um inteiro positivo não nulo (n=1,2,..., N) 
+e o número N de níveis depende de V. 
+
+
+
+Os valores permitidos de 0<E<V são dados pela solução da equação transcedental:
+
+                  tan(w np.sqrt(2m(V-E))/2 ℏ) = np.sqrt(V/(V-E) -1)
+
+onde ℏ é a constante de Planck.
+Essa equação pode ser simplificada e colocada em termos de uma variável Z e um parâmetro ZM que são dados por:
+
+            Z(E)=w np.sqrt(2m(V-E))/2 ℏ          e         ZM=w np.sqrt(2mV)/ (2ℏ)
+
+de modo que temos a equação transcedental
+
+                tan(Z)=np.sqrt((ZM/Z)**2 -1)
+
+com Z variando entre 0 e ZM.
+Cada solução Zn da equação acima (n=1,2,..., N) pode então ser convertida em uma energia En.
+ 
+ 
+ 
+ 
+Então temos que a função que precisamos encontrar os zeros é:
+
+                    f(x)=tan(z)-np.sqrt((ZM/Z)**2 -1)
+                    
+                    
+NESTE EP UTILIZAREMOS O MÉTODO DA BISSECÇÃO PARA ENCONTRAR OS ZEROS DA FUNÇÂO f(x).
+
+"""
+
+
+
+
+
+import numpy as np
+import matplotlib.pyplot as plt
+import math as mt
+
+ZM=float(input())
+a=float(0.1) #limite esquerdo
+b=float((np.pi)/2) #limite direito
+erro=0.0001  #erro = 10^-4
+Zout=[] #lista com os valores de Z
+n=3 
+
+def fun(x):  #Função Transcendental
+    return float(np.tan(x) -np.sqrt((ZM/x)**2 -1 ))
+
+
+
+def bis(a,b,erro): # Função do método da bissecção
+    x_c=float((a+b)/2) #média
+    
+    
+    while abs(fun(x_c)) > erro: #condição da convergência
+         
+        if fun(x_c)*fun(a) <0:
+            b=x_c
+            x_c=float((a+b)/2)
+            
+            
+        else:
+            a=float(x_c)
+            x_c=float((a+b)/2)
+    
+    
+    return x_c
+            
+        
+def mean(): #Função que adiciona os Z's na lista Zout
+    for i in range(n):
+        
+        Zout.append(bis(a+i*np.pi,b+i*np.pi,erro))
+    for num in Zout:
+        print("{:8.4f}".format(num))
+    
+    
+mean()
+        
+        
+    
+import scipy as npp
+    
+
